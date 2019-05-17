@@ -1,0 +1,148 @@
+<div class="container">
+  <div class="search-bar bg-dark row">
+    <div class="col-sm">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Nombre Rol</span>
+        </div>
+        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="nameRol">
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Descripción</span>
+        </div>
+        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="descRol">
+      </div>
+    </div>
+    <div class="col-sm">
+      <button type="button" class="btn btn-primary consult" (click)="consult()">CONSULTAR</button>
+      <button type="button" class="btn btn-light" (click)="clear()">LIMPIAR</button>
+    </div>
+  </div>
+  <div class="table-result">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Nombre Rol</th>
+          <th scope="col">Description</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listRoles; let i = index">
+          <td>{{item.nombre}}</td>
+          <td>{{item.descripcion}}</td>
+          <td>{{item.activo}}</td>
+          <td class="icons">
+            <a data-toggle="modal" data-target="#modifiedRol" (click)="modifiedRolButton(i)">
+              <i class="fas fa-edit"></i>
+            </a>
+            <a (click)="deleteElement(i)">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          </td>
+        </tr>
+        <tr>
+      </tbody> 
+    </table>     
+  </div>
+</div>
+<button type="button" class="btn btn-primary new-rol" data-toggle="modal" data-target="#newRol" (click)="newRolButton()">Nuevo Rol</button>
+<!-- Modal NEW ROL-->
+<div class="modal fade" id="newRol" tabindex="-1" role="dialog" aria-labelledby="newRol" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newRol">NEW ROL</h5>
+      </div>
+      <div class="modal-body">
+        <div class="row" [hidden]="successSend">
+          <div class="col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Nombre Rol</span>
+              </div>
+              <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="newnameRol">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Descripción</span>
+              </div>
+              <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="newdescRol">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">ESTADO</label>
+              </div>
+              <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="state">
+                <option selected>Choose...</option>
+                <option value='1' >Activo</option>
+                <option value='0' >Inactivo</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="success-send" [hidden]="successSendMeassage">
+          <h1 [hidden]="successSendMeassageSuccess">EL NUEVO ROL SE A REGISTRADO EXITOSAMENTE</h1>
+          <h1 [hidden]="successSendMeassageError">EL NUEVO ROL NO SE A PODIDO REGISTRAR</h1>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-button" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="newRol()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal MODIFICAR-->
+<div class="modal fade" id="modifiedRol" tabindex="-1" role="dialog" aria-labelledby="modifiedRol" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modifiedRol">MODIFICA EL ROL</h5>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Nombre Rol</span>
+              </div>
+              <input value="{{reference?.nombre}}" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="modnameRol">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Descripción</span>
+              </div>
+              <input value="{{reference?.descripcion}}" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="moddescRol">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">ESTADO</label>
+              </div>
+              <select class="custom-select mod-modal-options" id="inputGroupSelect01" [(ngModel)]="modstate">
+                <option class="activo" value='1' >Activo</option>
+                <option class="inactivo" value='0' >Inactivo</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-button" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="modifiedRol()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

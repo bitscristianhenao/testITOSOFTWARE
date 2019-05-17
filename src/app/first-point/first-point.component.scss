@@ -1,0 +1,46 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .search-bar {
+        width: 95%;
+        height: 150px;
+        margin-top: 20px;
+        border: 1px solid black;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        .consult {
+            margin-right: 10px;
+        }
+    }
+    .table-result {
+        width: 95%;
+        height: auto;
+        margin-top: 70px; 
+        border-radius: 5px;
+        .icons {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            a {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+.new-rol {
+    position: absolute;
+    top: 188px;
+    left: 118px;
+}
+.success-send {
+    h1 {
+        text-align: center;
+        color: rgb(79, 156, 1);
+    }
+}
